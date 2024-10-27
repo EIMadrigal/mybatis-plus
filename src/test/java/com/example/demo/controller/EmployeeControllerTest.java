@@ -6,16 +6,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @AutoConfigureMockMvc
-class StudentControllerTest {
+class EmployeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void getAllStudents() {
+    void getAllEmployees() {
     }
 }
