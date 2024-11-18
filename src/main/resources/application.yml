@@ -2,7 +2,7 @@ spring:
   application:
     name: ${APP_NAME:demo}
   datasource:
-    url: jdbc:postgresql://localhost:5432/employees
+    url: jdbc:postgresql://localhost:5432/employees?currentSchema=employees
     username: postgres
     password: 123456
   jpa:

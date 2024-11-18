@@ -48,6 +48,7 @@ public class EmployeeController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id) {
         employeeService.deleteEmployee(id);
-        return new ResponseEntity<String>("Employee deleted successfully!", HttpStatus.OK);
+        // nasty bug of json https://stackoverflow.com/questions/18385361
+        return new ResponseEntity<String>("\"Employee deleted successfully!\"", HttpStatus.OK);
     }
 }
