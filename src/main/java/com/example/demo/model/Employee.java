@@ -25,4 +25,7 @@ public class Employee {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "dept_id")
+    private Long deptId;
 }
