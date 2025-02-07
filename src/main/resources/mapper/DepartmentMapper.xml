@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.DepartmentMapper">
+    <select id="selectEmployees" resultType="com.example.demo.model.vo.DepartmentVo">
+        SELECT
+            d.id AS deptId,
+            d.dept_name,
+            d.create_time,
+            e.id AS empId,
+            e.email
+        FROM
+            department d
+        LEFT JOIN employees e ON d.id = e.dept_id
+
+        <!-- 这就是刚刚注解传进来的条件构造器 -->
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

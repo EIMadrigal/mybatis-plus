@@ -1,54 +1,42 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Employee;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.demo.model.vo.EmployeeVo;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.util.Result;
+import com.example.demo.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/employee")
 @CrossOrigin(origins = "http://localhost:4200")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    @GetMapping("/getEmployees")
+    public Result getEmployees() {
+        List<EmployeeVo> res = employeeService.getEmployees();
+        return ResultUtil.success(res);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long employeeId) {
-        return new ResponseEntity<Employee>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
-    }
-
-    @PostMapping()
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        return new ResponseEntity<Employee>(employeeService.createEmployee(employee), HttpStatus.CREATED);
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long employeeId, @RequestBody Employee employee) {
-        return new ResponseEntity<Employee>(employeeService.updateEmployee(employeeId, employee), HttpStatus.OK);
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id) {
-        employeeService.deleteEmployee(id);
-        // nasty bug of json https://stackoverflow.com/questions/18385361
-        return new ResponseEntity<String>("\"Employee deleted successfully!\"", HttpStatus.OK);
+    @GetMapping("/getEmployeesPage")
+    public Result getEmployeesPage(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+                                   @RequestParam(required = false, defaultValue = "2") Integer pageSize) {
+        IPage<EmployeeVo> res = employeeService.getEmployeesPage(pageNum, pageSize);
+        System.out.println("Total records: " + res.getTotal());
+        System.out.println("Total pages: " + res.getPages());
+        System.out.println("Current page: " + res.getCurrent());
+        List<EmployeeVo> records = res.getRecords();
+        records.forEach(System.out::println);
+        return ResultUtil.success(res);
     }
 }

@@ -1,54 +1,57 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.mapper.EmployeeRepository;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-
+@RunWith(SpringRunner.class)
 @SpringBootTest
-class EmployeeServiceImplTest {
+public class EmployeeServiceImplTest {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @MockBean
-    private EmployeeRepository employeeRepository;
-
     @Test
-    void contextLoads() {
-        assertNotNull(employeeService);
+    public void getEmployee() {
+        LambdaQueryWrapper<Employee> wrapper = Wrappers.lambdaQuery();
+        wrapper.gt(Employee::getId, 5);
+        Employee employee = employeeService.getOne(wrapper, false);
+        System.out.println(employee);
     }
 
     @Test
-    void getAllEmployees() {
-
-    }
-
-    @Test
-    void getEmployeeById() {
+    public void insertEmployee() {
         Employee employee = new Employee();
-        employee.setId(999L);
-        employee.setFirstName("William");
-        employee.setLastName("Wang");
-        employee.setEmail("William.Wang@google.com");
+        employee.setFirstName("Pony");
+        employee.setLastName("Ma");
+        employee.setEmail("Pony.Ma@tencent.com");
+        employee.setDeptId(2L);
+        employeeService.save(employee);
+    }
 
-        when(employeeRepository.findById(999L)).thenReturn(Optional.of(employee));
-        Employee result = employeeService.getEmployeeById(999L);
+    @Test
+    public void insertEmployee2() {
+        Employee employee = new Employee();
+        employee.setFirstName("Jack");
+        employee.setLastName("Ma");
+        employee.setEmail("Jack.Ma@alibaba.com");
+        employee.setDeptId(2L);
+        employeeService.save(employee);
+    }
 
-        assertThat(result).isEqualTo(employee);
-
-        verify(employeeRepository, times(1)).findById(999L);
+    @Test
+    public void insertEmployee3() {
+        Employee employee = new Employee();
+        employee.setFirstName("Richard");
+        employee.setLastName("Yu");
+        employee.setEmail("Richard.Yu@huawei.com");
+        employee.setDeptId(3L);
+        employeeService.save(employee);
     }
 }
