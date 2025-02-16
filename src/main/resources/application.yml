@@ -11,6 +11,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml

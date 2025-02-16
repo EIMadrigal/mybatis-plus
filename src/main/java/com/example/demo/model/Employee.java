@@ -5,10 +5,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @TableName(value = "employees")
 @Data
@@ -40,5 +46,14 @@ public class Employee {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
+
+    @TableField(exist = false)
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(
+//        name = "emp_book",
+//        joinColumns = @JoinColumn(name = "emp_id"),
+//        inverseJoinColumns = @JoinColumn(name = "book_id")
+//    )
+    private List<Book> employeeBooks;
 
 }

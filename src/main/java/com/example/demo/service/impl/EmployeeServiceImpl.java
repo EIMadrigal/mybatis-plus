@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.mapper.EmployeeMapper;
+import com.example.demo.model.Book;
 import com.example.demo.model.Employee;
 import com.example.demo.model.vo.BookVo;
 import com.example.demo.model.vo.EmployeeVo;
@@ -48,6 +49,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public List<BookVo> selectEmployeeBooks(Long empId) {
+        Employee employee = employeeMapper.selectById(7L);
+        List<Book> employeeBooks = employee.getEmployeeBooks();
+
         return employeeMapper.selectEmployeeBooks(empId);
     }
 }
