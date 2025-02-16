@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.mapper.EmployeeMapper;
 import com.example.demo.model.Employee;
+import com.example.demo.model.vo.BookVo;
 import com.example.demo.model.vo.EmployeeVo;
 import com.example.demo.service.EmployeeService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +39,15 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
         IPage<EmployeeVo> res = employeeMapper.selectEmployeePage(page, queryWrapper);
         return res;
+    }
+
+//    @Override
+//    public EmployeeVo getEmployee(Integer empId) {
+//
+//    }
+
+    @Override
+    public List<BookVo> selectEmployeeBooks(Long empId) {
+        return employeeMapper.selectEmployeeBooks(empId);
     }
 }

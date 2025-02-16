@@ -2,16 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.EmployeeMapper">
     <select id="selectListByQuery" resultType="com.example.demo.model.vo.EmployeeVo">
-        SELECT
-            e.id AS empId,
-            d.id AS deptId,
-            e.email,
-            d.dept_name,
-            d.dept_desc
-        FROM
-            employees e
-        LEFT JOIN department d ON e.dept_id = d.id
-
+        SELECT e.id AS empId, d.id AS deptId, e.email, d.dept_name, d.dept_desc
+        FROM employees e
+        LEFT JOIN department d
+        ON e.dept_id = d.id
         <!-- 注解传进来的条件构造器 -->
         ${ew.customSqlSegment}
     </select>
